@@ -1,0 +1,15 @@
+#https://hub.docker.com/r/wernight/mopidy/
+snapserver:
+  build: ../.
+  dockerfile: DockerfileServerX86
+  command: "/usr/sbin/snapserver"
+
+snapclient:
+  build: ../.
+  dockerfile: DockerfileClientX86
+  links:
+   - snapserver:snapserverhost
+  devices:
+   - "/dev/snd/:/dev/snd/"
+  command: "/usr/sbin/snapclient -i snapserverhost"
+  
