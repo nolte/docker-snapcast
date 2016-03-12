@@ -1,4 +1,4 @@
-#SnapCast Docker Container
+# SnapCast Docker Container
 
  [SnapCast] (https://github.com/badaix/snapcast)
 
@@ -13,3 +13,7 @@ snapcast-server:rpi
 snapcast-client:x86
 snapcast-server:x86
 ```
+
+### RPI host config 
+
+ sudo apt-get install pulseaudio
