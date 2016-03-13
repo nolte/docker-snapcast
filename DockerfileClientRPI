@@ -1,9 +1,13 @@
 FROM sdhibit/rpi-raspbian
 
-RUN apt-get update && apt-get install wget -y
-RUN wget https://github.com/badaix/snapcast/releases/download/v0.4.0/snapclient_0.4.0_armhf.deb
+ENV SNAPCASTVERSION=0.4.0
 
-RUN dpkg -i --force-all snapclient_0.4.0_armhf.deb
+RUN apt-get update && apt-get install wget -y
+RUN wget https://github.com/badaix/snapcast/releases/download/v$SNAPCASTVERSION/snapclient_$SNAPCASTVERSION_armhf.deb
+
+RUN dpkg -i --force-all snapclient_$SNAPCASTVERSION_armhf.deb
 RUN apt-get -f install -y
+
+RUN apt-get update && apt-get install alsa-base alsa-utils -y
 
 CMD "/usr/sbin/snapclient"
