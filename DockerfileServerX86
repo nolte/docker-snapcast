@@ -1,8 +1,11 @@
 FROM ubuntu:latest
 
 RUN apt-get update && apt-get install wget -y
-RUN wget https://github.com/badaix/snapcast/releases/download/v0.4.0/snapserver_0.4.0_amd64.deb
 
-RUN dpkg -i --force-all snapserver_0.4.0_amd64.deb
+ENV SNAPCASTVERSION=0.4.1
+
+RUN wget 'https://github.com/badaix/snapcast/releases/download/v'$SNAPCASTVERSION'/snapserver_'$SNAPCASTVERSION'_amd64.deb'
+
+RUN dpkg -i --force-all 'snapserver_'$SNAPCASTVERSION'_amd64.deb'
 RUN apt-get -f install -y
 
