@@ -9,7 +9,7 @@
 
 ```bash
  docker build -f DockerfileClientRPI -t bill:5043/rpi-snapcast-client:0.4.1 . 
- docker build -f DockerfileServerRPI -t bill:5043/rpi-snapcast-server:0.4.1 .`
+ docker build -f DockerfileServerRPI -t bill:5043/rpi-snapcast-server:0.4.1 .
 ```
 
 
