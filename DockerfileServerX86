@@ -9,3 +9,8 @@ RUN wget 'https://github.com/badaix/snapcast/releases/download/v'$SNAPCASTVERSIO
 RUN dpkg -i --force-all 'snapserver_'$SNAPCASTVERSION'_amd64.deb'
 RUN apt-get -f install -y
 
+RUN mkdir -p /root/.config/snapcast/
+
+ENTRYPOINT ["/usr/sbin/snapserver"]
+
+CMD "bash"
