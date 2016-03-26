@@ -2,7 +2,7 @@ FROM ubuntu:latest
 
 RUN apt-get update && apt-get install wget -y
 
-ENV SNAPCASTVERSION=0.4.1
+ENV SNAPCASTVERSION=0.5.0
 
 RUN wget 'https://github.com/badaix/snapcast/releases/download/v'$SNAPCASTVERSION'/snapclient_'$SNAPCASTVERSION'_amd64.deb'
 
