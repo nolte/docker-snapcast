@@ -2,7 +2,7 @@ FROM sdhibit/rpi-raspbian
 
 RUN apt-get update && apt-get install wget -y
 
-ENV SNAPCASTVERSION=0.5.0
+ENV SNAPCASTVERSION=0.7.0
 
 RUN wget https://github.com/badaix/snapcast/releases/download/v${SNAPCASTVERSION}/snapserver_${SNAPCASTVERSION}_armhf.deb
 
