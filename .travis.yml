@@ -1,0 +1,23 @@
+sudo: required
+
+services:
+  - docker
+env:
+- SNAPCASTVERSION=0.4.1
+
+before_install:
+- echo $(date +"%s") > /tmp/jobstart
+
+script: 
+- docker build -t nolte/snapcast-client:$(echo $SNAPCASTVERSION) -f DockerfileClientX86 .
+- docker build -t nolte/snapcast-server:$(echo $SNAPCASTVERSION) -f DockerfileServerX86 .
+
+branches:
+  except:
+  - gh-pages
+
+notifications:
+  slack:
+    rooms:
+      secure: wxbdzqs8U7mbB68hNRzVCGEr+NaS2MZu24GdSdvLfV8Pae1vAd4T0fAhi8zzPxvVvQ/AxEDkhmKE9H0FJTkdPl1TqtBc01DGTHzsmMITLCMThBYy0LKgg0UZh4JPg/9svQyut+2mm0u0WImaQ92sK3DfxXQBcPDaLI2LPrffuWiBXjT5tGwu8u9CDYZs5atu1WcsYk4xg0E4s/Y6GMOuDkgLDMECFhrpiHETS+fBBFNNaIpzRhuWO3LVWTy8FjJRiay/V0Hb4ScfzQBfRmDOUqHVhFo1OElUYjsH26Atn75fpPDHr2pZxHWaJZ5naeBQcghTrfoglmzIKmJ1V53ZrtWNhnwWDG0RbtA9ZttRIX9//ip+4ShBoWgn10qacBTlwMidaTDIYG65mL47DR6upCcWl6ex+zX3jnN3W8D9UkM61yRgB8ZcsuIt7G1OB3zirF4+4OuXeMVDjTJExRR7AulBcWTfBPu1CQ9eM3buK0J64DR3jSnXN87Krj6Bhx2mqRKMtc8yWlGLWzwGiZzSj3vOIH/2urYIh+8jkmtrD4mVMLRKma4JyiE/IHya/lzb3082/rMesrmNTZ94pdJB3fU+LWsU0EaGx30/kfJFBru+3HKiEmDZ4Ur9CP3B7XVcdCYZxxHR7F4yy7UZsB0FlQcs7qHYDpPaU+iMUnRzqD4=
+    on_success: always
