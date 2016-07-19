@@ -1,21 +1,26 @@
 sudo: required
-
 services:
-  - docker
+- docker
 env:
-- SNAPCASTVERSION=0.4.1
-
+  matrix:
+  - SNAPCASTVERSION=0.4.1
+  global:
+    secure: UxoAW8gf8ryKXCKB+SHW6CHGkSqKhv5Pfjl2iG26zO25EjCZ3ShEDWKJzupvTR1IlHbwOJ8GJlKf5PyxWmqY0om+lHYHn80zD1mWqIUAEmv7IA31SOeEIF1YZdeUDc47KxL8A/LS2xJV5y2KPPtltD5ZCW0v1GeftWsHCpvRgul/Fd9WSpaBuK9Vuy7lC5lAy8MKHI03c2Pstbs+MzxjF6iMFCN2Z9vxfCu5KWZAUs6BvCJL8LPcEMvGUHfOUM4OGkj8PWQknDc7EesrsCDceX1xx/aPUSGrCQnWM/bII/hLVslAZDeXrQWgM/Ovg0iWLuOnWwjT5ruGZmpjvKVBMcj7iJmHOVuM7bwrF9GnenEHk664jeJGHa3yGzGEg3g61FJ52gkJuGsLw4EJZ9mtDGidyCL1CkFk87eLUMYMW1Wh9KQPxN3QTeYkEkKVFWYeQpR1+/i0KchnvLlKZsDYR/o5WtEKsVjyaUK9rBJwVFfydD+wXM9QT1IGG939dNKjFeMII6CoW3kneA2c2wlTPY0qqNFNltRmvXmK3uD1+ChHB7IYGQd60kvHezpeG+RHLqdl6w23Vwlnf7azTaAoVUcR8joD6D8Y4vS2DvSCAjcSSmvs5uhZfmrFFwuA/NID1kZTEkO05vg8HE31zbxOFIkA27YdO02135nXHWi8WOE=
 before_install:
 - echo $(date +"%s") > /tmp/jobstart
-
-script: 
-- docker build -t nolte/snapcast-client:$(echo $SNAPCASTVERSION) -f DockerfileClientX86 .
-- docker build -t nolte/snapcast-server:$(echo $SNAPCASTVERSION) -f DockerfileServerX86 .
-
+before_script:
+- chmod +x ./script/keen-io-count.sh
+script:
+- docker build -t nolte/snapcast-client:$(echo $SNAPCASTVERSION) -f DockerfileClientX86
+  .
+- docker build -t nolte/snapcast-server:$(echo $SNAPCASTVERSION) -f DockerfileServerX86
+  .
+after_script:
+- ./script/keen-io-count.sh jekyll-site travis-ci $(echo $TRAVIS_BRANCH) $(cat /tmp/jobstart)
+  $(date +"%s") $(echo $TRAVIS_TEST_RESULT)
 branches:
   except:
   - gh-pages
-
 notifications:
   slack:
     rooms:
