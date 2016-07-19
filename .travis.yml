@@ -20,7 +20,7 @@ script:
 - docker build -t nolte/snapcast-server:$(echo $SNAPCASTVERSION) -f DockerfileServerX86
   .
 - ./script/keen-io-count.sh docker-snapcast-server travis-ci $(echo $TRAVIS_BRANCH)
-  $(cat /tmp/jobstartClient) $(date +"%s") $(echo $TRAVIS_TEST_RESULT)
+  $(cat /tmp/jobstartServer) $(date +"%s") $(echo $TRAVIS_TEST_RESULT)
 after_script:
 - ./script/keen-io-count.sh docker-snapcast travis-ci $(echo $TRAVIS_BRANCH) $(cat
   /tmp/jobstart) $(date +"%s") $(echo $TRAVIS_TEST_RESULT)
