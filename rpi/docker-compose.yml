@@ -1,7 +1,6 @@
 snapserver:
   build: ../.
   dockerfile: DockerfileServerRPI
-  command: "/usr/sbin/snapserver"
 
 snapclient:
   build: ../.
@@ -10,5 +9,5 @@ snapclient:
    - snapserver:snapserverhost
   devices:
    - "/dev/snd/:/dev/snd/"
-  command: "/usr/sbin/snapclient -i snapserverhost"
+  command: "-i snapserverhost"
   

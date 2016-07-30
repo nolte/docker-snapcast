@@ -4,10 +4,13 @@ RUN apt-get update && apt-get install wget -y
 
 ENV SNAPCASTVERSION=0.8.0
 
-RUN apt-get update && apt-get install wget -y
-RUN wget https://github.com/badaix/snapcast/releases/download/v$SNAPCASTVERSION/snapserver_$SNAPCASTVERSION_armhf.deb
+RUN wget https://github.com/badaix/snapcast/releases/download/v${SNAPCASTVERSION}/snapserver_${SNAPCASTVERSION}_armhf.deb
 
-RUN dpkg -i --force-all snapserver_$SNAPCASTVERSION_armhf.deb
+RUN dpkg -i --force-all snapserver_${SNAPCASTVERSION}_armhf.deb
 RUN apt-get -f install -y
 
-CMD "/usr/sbin/snapserver"
+RUN mkdir -p /root/.config/snapcast/
+
+ENTRYPOINT ["/usr/sbin/snapserver"]
+
+CMD "bash"
