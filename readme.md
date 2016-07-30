@@ -12,6 +12,10 @@
  docker build -f DockerfileServerRPI -t bill:5043/audiostation/armhf-snapcast-server:0.8.0 .
 ```
 
+```bash
+ docker build -f DockerfileClientX86 -t bill:5043/audiostation/snapcast-client:0.8.0 . 
+ docker build -f DockerfileServerX86 -t bill:5043/audiostation/snapcast-server:0.8.0 .
+```
 
 ## Images
 
