@@ -2,7 +2,7 @@ FROM sdhibit/rpi-raspbian
 
 RUN apt-get update && apt-get install wget -y
 
-ENV SNAPCASTVERSION=0.8.0
+ARG SNAPCASTVERSION
 
 RUN wget https://github.com/badaix/snapcast/releases/download/v${SNAPCASTVERSION}/snapserver_${SNAPCASTVERSION}_armhf.deb
 
@@ -11,6 +11,6 @@ RUN apt-get -f install -y
 
 RUN mkdir -p /root/.config/snapcast/
 
-ENTRYPOINT ["/usr/sbin/snapserver"]
+ENTRYPOINT ["/usr/sbin/snapserver","-s","pipe:///tmp/snapfifo?name=Radio&mode=read"]
 
 CMD "bash"

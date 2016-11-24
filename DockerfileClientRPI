@@ -1,6 +1,6 @@
 FROM sdhibit/rpi-raspbian
 
-ENV SNAPCASTVERSION=0.8.0
+ARG SNAPCASTVERSION
 
 RUN apt-get update && apt-get install wget -y
 
