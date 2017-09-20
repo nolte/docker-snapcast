@@ -11,5 +11,4 @@ RUN apt-get -f install -y
 
 RUN mkdir -p /root/.config/snapcast/
 
-ENTRYPOINT ["/usr/sbin/snapserver"]
-CMD "bash"
+ENTRYPOINT ["snapserver"]
