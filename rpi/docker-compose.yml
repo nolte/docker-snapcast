@@ -10,7 +10,7 @@ services:
   snapclient:
     build:
       context: ../.
-      dockerfile: DockerfileServerRPI
+      dockerfile: DockerfileClientRPI
       args:
         SNAPCASTVERSION: 0.11.1
     links:
