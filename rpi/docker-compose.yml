@@ -1,13 +1,20 @@
-snapserver:
-  build: ../.
-  dockerfile: DockerfileServerRPI
+version: '3'
+services:
+  snapserver:
+    build:
+      context: ../.
+      dockerfile: DockerfileServerRPI
+      args:
+        SNAPCASTVERSION: 0.11.1
 
-snapclient:
-  build: ../.
-  dockerfile: DockerfileClientRPI
-  links:
-   - snapserver:snapserverhost
-  devices:
-   - "/dev/snd/:/dev/snd/"
-  command: "-i snapserverhost"
-  
+  snapclient:
+    build:
+      context: ../.
+      dockerfile: DockerfileClientRPI
+      args:
+        SNAPCASTVERSION: 0.11.1
+    links:
+     - snapserver:snapserverhost
+    devices:
+     - "/dev/snd/:/dev/snd/"
+    command: "-h snapserverhost"
