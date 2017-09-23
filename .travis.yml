@@ -36,7 +36,7 @@ jobs:
           script: $TRAVISCI_SCRIPT_DIR/dockerhub_deploy.sh $DOCKER_USERNAME $DOCKER_PASSWORD nolte/rpi-snapcast-client rpi-snapcast-client latest
     - script:
         - docker run --rm --privileged multiarch/qemu-user-static:register --reset
-        - docker build -t nolte/rpi-snapcast-server -f DockerfileServertRPI --build-arg SNAPCASTVERSION=${SNAPCASTVERSION} .
+        - docker build -t nolte/rpi-snapcast-server -f DockerfileServerRPI --build-arg SNAPCASTVERSION=${SNAPCASTVERSION} .
       deploy:
         # only executed on master branch
         - provider: script
