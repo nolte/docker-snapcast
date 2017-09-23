@@ -1,4 +1,5 @@
 sudo: required
+language: bash
 services:
 - docker
 env:
@@ -9,12 +10,10 @@ env:
     - DOCKER_USERNAME=nolte
     - secure: "dtw1YjVr/ZW9c1ErLz04rh8v+IojBO4k3JL+yM3H0fyIWc06xq5DPIgDuMMuqAknUJCpDu1WhC9lwqXWDoPNZqSQBVJs7ozYiHFpaoA5tTmUiGZ1MxB0ET2OGIWreSUSXYU9Z5Cf5aB5AsK3NXas3+3fiIaw6Lg9vLLF3c+AD9N2Qrby5ssgBzJ+tC2Wikrg8FHhHRXObxxb50Zhaj2AZlnemIt0yAutmGKAGdGPdJnNYppSOKdd3F08YtzPDWrxpqUJqFxRc7k11Q6XJoSFWSmqKYEDB1RIC421ZRCSsDfR5nYkGRT2jcqXLGUnE9DLTyXjB1tMDYApw8cY9wXZeb/CowffHdus8laO/fIkMu2mA/faeM30F65IToKkHjRD3LcaDGU3KM+xGbqe+ySx+IJ59DtDXHNVS1E/bRu8A6/adulMd07PCgLFBnxsn88aquaDGdw7awFzqGmuEdirJivj5AQDJ8nYUPJGu/ifZ3YyFCwvbN3MgU3fSq6KO7wR78bGe2AdwZFvbePuG952mQ0V07f5V6iJV4Sl1Kc0VUeV/jdbtxtR6kZYezXTm64SgQ882RMjdT7Q55Bw1ICivQVGOABlGl0pRzK7YlgHpPnu+/N5NBARRDQgRTgjTGCMgHQsE/Q8iAHx5EBm9OkAypb9nS7fHing/muFnAQ73NE="
 
-
 before_install:
   - mkdir -p $TRAVISCI_SCRIPT_DIR
   - wget https://gist.githubusercontent.com/nolte/33a1a963d8161db0641b59f26d794e01/raw/dockerhub_deploy.sh -O $TRAVISCI_SCRIPT_DIR/dockerhub_deploy.sh
   - chmod u+x $TRAVISCI_SCRIPT_DIR/*
-
 
 jobs:
   include:
@@ -45,8 +44,6 @@ jobs:
             branch: development
         - provider: script
           script: $TRAVISCI_SCRIPT_DIR/dockerhub_deploy.sh $DOCKER_USERNAME $DOCKER_PASSWORD nolte/rpi-snapcast-server rpi-snapcast-server latest
-
-
 
 notifications:
   webhooks: https://keenio-gateway.herokuapp.com/build
