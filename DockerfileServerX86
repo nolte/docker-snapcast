@@ -11,4 +11,6 @@ RUN apt-get -f install -y
 
 RUN mkdir -p /root/.config/snapcast/
 
+EXPOSE 1704
+
 ENTRYPOINT ["snapserver"]
