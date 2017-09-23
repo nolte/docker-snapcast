@@ -5,11 +5,47 @@ env:
   matrix:
   - SNAPCASTVERSION=0.11.1
   global:
-    secure: EIre/4kcUNlDHJDbnh8Q4ozq2PdrMvR+8lZ7SuZBPuCe8DT1FJHaVeWvTUzwhfdF68ShDDDs27bC/DOV077SmnF6pp0KiPhRhFY2tir/dchlmnlduWXC+OxZ1zCmX8Mh0Udk/soXNgCTzGCpz7F6E0maoRnTKEvPcGhkzSx2GkHlHwTNJSwkACYDl9ga+DgcSACMMkE3BlHberlmTZyGTiASir0oh7Vdk1tH4esB2Y3iHeOUNTiTQHOpFMzJe5Gd7vV8g8s2NNJ5FLhtPFFlVGJ15gwqrpdoYJWRv2YMKkIxzfv45YSmyIuTqgMBWrfl8sc66LLKfOiVrFtlz2Y7d5LoI3cEtTAgBdn2tntH2++sMAvenIy+/KeeMdgzTTHeFsIbKTwYHQ8zXwia4gZR8Oq3FGN0JmPKeeWD/J+hsFB3P6E8q/0aPpvOa63/IYcmJ/MsXTok2jwBKXpopr+T0OVJBJ+ZOsfzicyH8AvwQpZJZqMXvdl7cJuL6kbPUWhnNSPRaXaEjXIcwoLGURslpxblCP8LKiXm1Lzbpyz+T61MU+uWYdzy0KFubjA3Gygf9ke+A8G5itYwtGt5lRwJKLx+7qyHqSKcMyngYbRpc36+krPiRGCN9du6EL3In3fg+g+/eYeIDG+mFTJnBucwOzZqQeJg9cb+MDbx8pIjnEg=
+    - TRAVISCI_SCRIPT_DIR=/tmp/ci_scripts
+    - DOCKER_USERNAME=nolte
+    - secure: EIre/4kcUNlDHJDbnh8Q4ozq2PdrMvR+8lZ7SuZBPuCe8DT1FJHaVeWvTUzwhfdF68ShDDDs27bC/DOV077SmnF6pp0KiPhRhFY2tir/dchlmnlduWXC+OxZ1zCmX8Mh0Udk/soXNgCTzGCpz7F6E0maoRnTKEvPcGhkzSx2GkHlHwTNJSwkACYDl9ga+DgcSACMMkE3BlHberlmTZyGTiASir0oh7Vdk1tH4esB2Y3iHeOUNTiTQHOpFMzJe5Gd7vV8g8s2NNJ5FLhtPFFlVGJ15gwqrpdoYJWRv2YMKkIxzfv45YSmyIuTqgMBWrfl8sc66LLKfOiVrFtlz2Y7d5LoI3cEtTAgBdn2tntH2++sMAvenIy+/KeeMdgzTTHeFsIbKTwYHQ8zXwia4gZR8Oq3FGN0JmPKeeWD/J+hsFB3P6E8q/0aPpvOa63/IYcmJ/MsXTok2jwBKXpopr+T0OVJBJ+ZOsfzicyH8AvwQpZJZqMXvdl7cJuL6kbPUWhnNSPRaXaEjXIcwoLGURslpxblCP8LKiXm1Lzbpyz+T61MU+uWYdzy0KFubjA3Gygf9ke+A8G5itYwtGt5lRwJKLx+7qyHqSKcMyngYbRpc36+krPiRGCN9du6EL3In3fg+g+/eYeIDG+mFTJnBucwOzZqQeJg9cb+MDbx8pIjnEg=
 
-script:
-  - docker build -t nolte/snapcast-client:$(echo $SNAPCASTVERSION) -f DockerfileClientX86 --build-arg SNAPCASTVERSION=${SNAPCASTVERSION} .
-  - docker build -t nolte/snapcast-server:$(echo $SNAPCASTVERSION) -f DockerfileServerX86 --build-arg SNAPCASTVERSION=${SNAPCASTVERSION} .
+
+before_install:
+  - mkdir -p $TRAVISCI_SCRIPT_DIR
+  - wget https://gist.githubusercontent.com/nolte/33a1a963d8161db0641b59f26d794e01/raw/dockerhub_deploy.sh -O $TRAVISCI_SCRIPT_DIR/dockerhub_deploy.sh
+  - chmod u+x $TRAVISCI_SCRIPT_DIR/*
+
+
+jobs:
+  include:
+    - stage: build
+      script:
+        - docker build -t nolte/snapcast-client:$(echo $SNAPCASTVERSION) -f DockerfileClientX86 --build-arg SNAPCASTVERSION=${SNAPCASTVERSION} .
+    - script:
+        - docker build -t nolte/snapcast-server:$(echo $SNAPCASTVERSION) -f DockerfileServerX86 --build-arg SNAPCASTVERSION=${SNAPCASTVERSION} .
+    - script:
+        - docker run --rm --privileged multiarch/qemu-user-static:register --reset
+        - docker build -t nolte/rpi-snapcast-client -f DockerfileClientRPI --build-arg SNAPCASTVERSION=${SNAPCASTVERSION} .
+      deploy:
+        # only executed on master branch
+        - provider: script
+          script: $TRAVISCI_SCRIPT_DIR/dockerhub_deploy.sh $DOCKER_USERNAME $DOCKER_PASSWORD nolte/rpi-snapcast-client rpi-snapcast-client development
+          on:
+            branch: development
+        - provider: script
+          script: $TRAVISCI_SCRIPT_DIR/dockerhub_deploy.sh $DOCKER_USERNAME $DOCKER_PASSWORD nolte/rpi-snapcast-client rpi-snapcast-client latest
+    - script:
+        - docker run --rm --privileged multiarch/qemu-user-static:register --reset
+        - docker build -t nolte/rpi-snapcast-server -f DockerfileServerRPI --build-arg SNAPCASTVERSION=${SNAPCASTVERSION} .
+      deploy:
+        # only executed on master branch
+        - provider: script
+          script: $TRAVISCI_SCRIPT_DIR/dockerhub_deploy.sh $DOCKER_USERNAME $DOCKER_PASSWORD nolte/rpi-snapcast-server rpi-snapcast-server development
+          on:
+            branch: development
+        - provider: script
+          script: $TRAVISCI_SCRIPT_DIR/dockerhub_deploy.sh $DOCKER_USERNAME $DOCKER_PASSWORD nolte/rpi-snapcast-server rpi-snapcast-server latest
+
 
 
 notifications:
