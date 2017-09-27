@@ -44,6 +44,14 @@ jobs:
             branch: development
         - provider: script
           script: $TRAVISCI_SCRIPT_DIR/dockerhub_deploy.sh $DOCKER_USERNAME $DOCKER_PASSWORD nolte/rpi-snapcast-server rpi-snapcast-server latest
+        # Tag deploy all with v started tags to dockerhub
+        - provider: script
+          script: $TRAVISCI_SCRIPT_DIR/dockerhub_deploy.sh $DOCKER_USERNAME $DOCKER_PASSWORD nolte/rpi-snapcast-server rpi-snapcast-server $TRAVIS_TAG
+          on:
+            tags: true
+            all_branches: true
+            condition: "$TRAVIS_TAG =~ ^v*$"
+
 
 notifications:
   webhooks: https://keenio-gateway.herokuapp.com/build
