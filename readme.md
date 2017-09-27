@@ -3,7 +3,6 @@
 
  [SnapCast](https://github.com/badaix/snapcast) are a wonderful Multiroom Audio solution. This Repository only contains the SnapCast part, for a full Home Entertaiment System you need additional software like [Mopidy](https://www.mopidy.com/). A full compose file can be found under [nolte/docker_compose-audiostation](https://github.com/nolte/docker_compose-audiostation).
 
-
 ## Containers
 For Easy Starting you can find a Docker Image for
 
@@ -46,3 +45,4 @@ docker build -t nolte/rpi-snapcast-server:development -f DockerfileServerRPI --b
 ### Android
 
  Use the original Andorid Client from [badaix/snapcast](https://github.com/badaix/snapcast/releases/latest) !
+
