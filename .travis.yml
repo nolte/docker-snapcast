@@ -33,6 +33,12 @@ jobs:
             branch: development
         - provider: script
           script: $TRAVISCI_SCRIPT_DIR/dockerhub_deploy.sh $DOCKER_USERNAME $DOCKER_PASSWORD nolte/rpi-snapcast-client rpi-snapcast-client latest
+        - provider: script
+          script: $TRAVISCI_SCRIPT_DIR/dockerhub_deploy.sh $DOCKER_USERNAME $DOCKER_PASSWORD nolte/rpi-snapcast-client rpi-snapcast-client $TRAVIS_TAG
+          on:
+            tags: true
+            all_branches: false
+
     - script:
         - docker run --rm --privileged multiarch/qemu-user-static:register --reset
         - docker build -t nolte/rpi-snapcast-server -f DockerfileServerRPI --build-arg SNAPCASTVERSION=${SNAPCASTVERSION} .
@@ -44,13 +50,12 @@ jobs:
             branch: development
         - provider: script
           script: $TRAVISCI_SCRIPT_DIR/dockerhub_deploy.sh $DOCKER_USERNAME $DOCKER_PASSWORD nolte/rpi-snapcast-server rpi-snapcast-server latest
-        # Tag deploy all with v started tags to dockerhub
+        # Tag deploy all with v started tags to dockerhub (like v0.9-0.11.1)
         - provider: script
           script: $TRAVISCI_SCRIPT_DIR/dockerhub_deploy.sh $DOCKER_USERNAME $DOCKER_PASSWORD nolte/rpi-snapcast-server rpi-snapcast-server $TRAVIS_TAG
           on:
             tags: true
-            all_branches: true
-            condition: "$TRAVIS_TAG =~ ^v*$"
+            all_branches: false
 
 
 notifications:
