@@ -1,0 +1,25 @@
+---
+on:
+  pull_request:
+    types:
+      - labeled
+      - unlabeled
+      - synchronize
+      - opened
+      - edited
+      - ready_for_review
+      - reopened
+      - unlocked
+  pull_request_review:
+    types:
+      - submitted
+  check_suite:
+    types:
+      - completed
+  status: {}
+
+jobs:
+  automerge:
+    uses: nolte/gh-plumbing/.github/workflows/reuseable-automerge.yaml@v1.0.5
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}

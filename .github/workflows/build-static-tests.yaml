@@ -1,0 +1,9 @@
+---
+on:
+  push:
+
+jobs:
+  static:
+    uses: nolte/gh-plumbing/.github/workflows/reuseable-pre-commit.yaml@v1.0.5
+  security:
+    uses: nolte/gh-plumbing/.github/workflows/reuseable-trivy.yaml@v1.0.5

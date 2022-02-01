@@ -1,0 +1,10 @@
+---
+on:
+  release:
+    types: [published]
+
+jobs:
+  refresh_presentation_branch:
+    uses: nolte/gh-plumbing/.github/workflows/reuseable-release-cd-refresh-master.yml@v1.0.5
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}

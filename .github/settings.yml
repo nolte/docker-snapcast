@@ -1,0 +1,10 @@
+---
+# These settings are synced to GitHub by https://probot.github.io/apps/settings/
+
+_extends: gh-plumbing:.github/commons-settings.yml
+
+repository:
+  name: docker-snapcast
+  description: Docker Container for Snapcast Multi Audio.
+  homepage: https://nolte.github.io/docker-snapcast
+  topics: audio, multiroom audio, mopidy, snapcast
