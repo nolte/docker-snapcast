@@ -4,7 +4,7 @@ ARG TARGETARCH
 ARG SNAPCASTVERSION=0.26.0
 
 RUN apt-get update && apt-get install wget ca-certificates -y
-RUN update-ca-certificates --fresh 
+RUN update-ca-certificates --fresh
 
 RUN DEBARCH="$TARGETARCH"; \
     if [ "$DEBARCH" = "arm" ]; then DEBARCH=armhf; fi; \

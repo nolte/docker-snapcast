@@ -31,4 +31,3 @@ docker buildx build \
 ### Android
 
  Use the original Andorid Client from [badaix/snapcast](https://github.com/badaix/snapcast/releases/latest) !
-
