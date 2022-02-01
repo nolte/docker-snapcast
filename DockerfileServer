@@ -1,0 +1,20 @@
+FROM ubuntu:20.04
+
+ARG TARGETARCH
+ARG SNAPCASTVERSION=0.26.0
+
+RUN apt-get update && apt-get install wget ca-certificates -y
+RUN update-ca-certificates --fresh 
+
+RUN DEBARCH="$TARGETARCH"; \
+    if [ "$DEBARCH" = "arm" ]; then DEBARCH=armhf; fi; \
+    wget "https://github.com/badaix/snapcast/releases/download/v${SNAPCASTVERSION}/snapserver_${SNAPCASTVERSION}-1_${DEBARCH}.deb" -O /tmp/snapserver.deb
+
+RUN dpkg -i --force-all /tmp/snapserver.deb
+RUN apt-get -f install -y
+
+RUN mkdir -p /root/.config/snapcast/
+
+EXPOSE 1704
+
+ENTRYPOINT ["snapserver"]

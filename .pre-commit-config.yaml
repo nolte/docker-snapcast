@@ -1,0 +1,20 @@
+---
+repos:
+  - repo: 'https://github.com/pre-commit/pre-commit-hooks'
+    rev: v4.1.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: |
+            (?x)(
+                .md
+            )
+      - id: end-of-file-fixer
+      - id: check-yaml
+  - repo: 'https://github.com/adrienverge/yamllint'
+    rev: v1.26.3
+    hooks:
+      - id: yamllint
+        exclude: |
+            (?x)(
+                .md
+            )

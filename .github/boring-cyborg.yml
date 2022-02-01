@@ -1,0 +1,4 @@
+---
+# These settings are synced to GitHub by https://probot.github.io/apps/boring-cyborg/
+
+_extends: gh-plumbing:.github/commons-boring-cyborg.yml

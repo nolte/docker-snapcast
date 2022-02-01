@@ -1,0 +1,4 @@
+---
+# These settings are synced to GitHub by https://probot.github.io/apps/release-drafter/
+
+_extends: gh-plumbing:.github/commons-release-drafter.yml
