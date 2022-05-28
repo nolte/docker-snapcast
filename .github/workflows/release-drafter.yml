@@ -6,6 +6,6 @@ on:
 
 jobs:
   update_release_draft:
-    uses: nolte/gh-plumbing/.github/workflows/reuseable-release-drafter.yml@v1.0.13
+    uses: nolte/gh-plumbing/.github/workflows/reuseable-release-drafter.yml@v1.0.14
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
