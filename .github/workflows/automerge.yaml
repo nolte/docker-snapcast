@@ -20,6 +20,6 @@ on:
 
 jobs:
   automerge:
-    uses: nolte/gh-plumbing/.github/workflows/reuseable-automerge.yaml@v1.0.14
+    uses: nolte/gh-plumbing/.github/workflows/reuseable-automerge.yaml@v1.0.17
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
